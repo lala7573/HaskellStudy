@@ -1,99 +1,78 @@
+{-|
+Module: BaseballGame
+Description: Baseball Game
+
+Baseball Game 규칙
+- 정답은 서로 겹치는 자릿수가 없는 세자리의 숫자 (123, 549, 608 등) 
+- 플레이어는 정답이 뭔지 추측해야함
+- 정답과 플레이어가 낸 답을 비교해서 각 자릿수에 대해 숫자와 위치가 모두 일치할 경우 Strike, 숫자만 일치할 경우 Ball
+  ex - 정답이 123일 때 124는 2S 0B, 231은 0S 3B
+- 정답을 맞추면 게임이 끝남
+-}
 module Main (main) where
-import Data.Bits (Bits(xor))
 
--- # Algebraic Data type
--- data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving Show
--- -- Circle :: Float -> Float -> Float -> Shape
--- -- Rectangle :: Float -> Float -> Float -> Float -> Shape
+import Data.List
+import System.Random
+import Control.Monad
 
--- surface :: Shape -> Float
--- surface (Circle _ _ r) = pi * r ^ 2
--- surface (Rectangle x1 y1 x2 y2) = abs $ (x2 - x1) * (y2 - y1)
+-- | 정답 생성
+makeAnswer :: StdGen -> Int
+makeAnswer gen = head candidates
+  where rands = randomRs (0, 9) gen
+        candidates = do
+            h <- rands
+            guard (h /= 0)
+            t <- rands
+            guard (h /= t)
+            o <- rands
+            guard (o /= t && o /= h)
+            return (h * 100 + t * 10 + o)
 
--- >>> map (Circle 10 20) [4, 5, 6, 6]
--- [Circle 10.0 20.0 4.0,Circle 10.0 20.0 5.0,Circle 10.0 20.0 6.0,Circle 10.0 20.0 6.0]
+getInput :: String -> Maybe Int
+getInput raw = go (reads raw)
+  where go [] = Nothing
+        go [(i, [])]
+          | i == 0 = Just 0
+          | i > 999 || i < 100 = Nothing
+          | (length . nub . show) i == 3 = Just i
+          | otherwise = Nothing
+        go _ = Nothing
 
--- # Record Syntax
--- data Person = Person String String Int String deriving (Show)
--- firstname (Person firstname _ _ _) = firstname
--- lastname :: Person -> String
--- lastname (Person _ lastname _ _) = lastname
--- age (Person _ _ age _) = age
--- address (Person _ _ _ address) = address
+end :: IO()
+end = do
+  putStrLn "game over."
 
--- data Person = Person { firstname:: String, lastname:: String, age:: Int, address:: String} deriving (Show, Eq)
--- -- >>> let joe = Person "joe" "test" 30 "somewhere good"
--- -- >>> firstname joe
--- -- >>> joe == Person "joe" "test" 30 "somewhere good"
--- -- "joe"
--- -- True
+retry :: Int -> IO()
+retry answer = do
+  putStrLn "invalid input."
 
+check :: Int -> Int -> IO()
+check answer guess
+  | answer == guess = do
+      putStrLn "you are right!"
+      end
+  | otherwise = do
+      let (s, b) = getStrikeAndBall answer guess
+      putStrLn $ show s ++ " strike, " ++ show b ++ " ball"
+      play answer
 
--- data Circle = Circle { origin:: (Int, Int), radius:: Int} deriving (Show)
--- -- >>> let c = Circle {radius = 5, origin=(0,0) }
--- -- >>> origin c
--- -- (0,0)
+getStrikeAndBall :: Int -> Int -> (Int, Int)
+getStrikeAndBall answer guess = (strike, ball)
+  where a = show answer
+        g = show guess
+        strike = length $ filter (\(x, y) -> x == y) (zip a g)
+        ball = length (filter (\x -> x `elem` a) g) - strike
 
--- type Point = (Int, Int)
-
--- distance :: Floating a => (a, a) -> (a, a) -> a
--- distance (x1, y1) (x2, y2) = sqrt $ (x2 - x1)^2 + (y2 - y1)^2
-
--- data List a = Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)
--- -- >>> 5 `Cons` Empty
--- -- >>> 4 `Cons` (5 `Cons` Empty)
--- -- Cons 5 Empty
--- -- Cons 4 (Cons 5 Empty)
-
--- -- >>> 4 `Cons` 5 `Cons` Empty
--- -- Non type-variable argument in the constraint: Num (List a)
--- -- (Use FlexibleContexts to permit this)
-
--- data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read, Eq)
-
--- # typeclass
--- data TrafficLight = Red | Yellow | Green
--- instance Eq TrafficLight where
---   Red == Red = True
---   Green == Green = True
---   Yellow == Yellow = True
---   _ == _ = False
-
--- class (Eq a) => Ord a where
---   compare :: a -> a -> Ordering
-
--- binary search tree 과제..
-data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show, Read)
-
-instance (Eq a) => Eq (Tree a) where
-  EmptyTree == EmptyTree = True
-  Node a a1 a2  == Node b b1 b2 = (a == b) && (a1 == b1) && (a2 == b2) 
-  _ == _ = False
-
--- >>> Node 1 EmptyTree
--- No instance for (Show (Tree Integer -> Tree Integer))
---   arising from a use of ‘evalPrint’
---   (maybe you haven't applied a function to enough arguments?)
-
-create a = Node a EmptyTree EmptyTree
-
--- >>> create 1
--- Node 1 EmptyTree EmptyTree
-
-insert :: (Ord a) => Tree a -> a -> Tree a
-insert EmptyTree a = create a
-insert node@(Node value left right) x 
-  | x == value = node
-  | x < value = Node value (insert left x) right
-  | otherwise = Node value left (insert right x)
-
-search :: (Ord a) => Tree a -> a -> Bool
-search EmptyTree _ = False
-search (Node value left right) x
-  | x == value = True
-  | x < value = search left x
-  | otherwise = search right x
-
-
+play :: Int -> IO()
+play answer = do
+  putStrLn  "guess the answer!(0: exit)"
+  rawInput <- getLine
+  let input = getInput rawInput
+  case input of Just 0 -> end
+                Nothing -> retry answer
+                Just guess -> check answer guess
 main:: IO()
-main = undefined
+main = do
+  gen <- getStdGen
+  play $ makeAnswer gen
+  
