@@ -21,7 +21,9 @@ description: Please see the README on GitHub at <https://github.com/githubuser/H
 
 dependencies:
   - base >= 4.7 && < 5
-  - random
+  - containers >= 0.5.9
+  - text
+  # - random
 
 ghc-options:
   - -Wall

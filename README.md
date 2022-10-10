@@ -9,7 +9,7 @@ link: https://github.com/jwvg0425/HaskellStudy
 
 ## DONE
 
-### 기존 스터디 자료
+### 스터디 자료
 
 [study 0 - 스터디 소개](http://www.slideshare.net/namhyeonuk90/haskell-study-0)  
 [study 1 - 기본 개념들](http://www.slideshare.net/namhyeonuk90/haskell-study-1)  
@@ -23,10 +23,19 @@ link: https://github.com/jwvg0425/HaskellStudy
 [study 9 - Monad & IO](http://www.slideshare.net/namhyeonuk90/haskell-study-9)  
 [study 10 - Baseball Game](http://www.slideshare.net/namhyeonuk90/haskell-study-10)
 
+- [x] [하스켈 위키 북스 교재 1장](https://wikidocs.net/book/204)
+
+### homework
+- [x] 포커 게임 만들기 (Deck → Deck → Result, 족보 기준 - https://namu.wiki/w/포커#s-3.1) => [코드](https://gist.github.com/lala7573/55398f651b52eb9f7353fc57e0efc0fc)
+
+- [ ] [exercism haskell](https://exercism.org/tracks/haskell/exercises) 100 문제 풀기 => [진도](https://exercism.org/profiles/lala7573)
+
 ## TODO
 
-- [ ] [하스켈 위키 북스 교재](https://wikidocs.net/book/204)
-- [ ] 포커 게임 만들기 (Deck → Deck → Result, 족보 기준 - https://namu.wiki/w/포커#s-3.1)
+- [ ] [하스켈 위키 북스 교재 2장](https://wikidocs.net/book/204)
+- [ ] [하스켈 위키 북스 교재 3장](https://wikidocs.net/book/204)
+- [ ] [하스켈 위키 북스 교재 4장](https://wikidocs.net/book/204)
+
 
 ### 하스켈 기초
 
