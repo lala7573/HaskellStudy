@@ -1,14 +1,29 @@
 module Main (main) where
 
-discard :: (a -> Bool) -> [a] -> [a]
-discard p xs = [x | x <- xs, not $ p x]
+-- anagram은 새로운 단어를 형성하기위해 문자를 재배열하는 것
+import Data.Char (toLower)
+import Data.List (sort)
 
--- >>> discard (==2) [1, 2, 3]
--- [1,3]
+-- >>> sort "listen"
+-- "eilnst"
+-- >>> sort "listen" == sort "google"
+-- False
 
+arrange :: String -> [Char]
+arrange = sort . map toLower
 
--- keep :: (a -> Bool) -> [a] -> [a]
--- keep p xs = error "You need to implement this function."
+anagramsFor :: String -> [String] -> [String]
+anagramsFor xs xss = [x | x <- xss, target == arrange x && lower /= map toLower x]
+  where 
+    target = arrange xs
+    lower = map toLower xs
+
+test xs xss = [x | x <- xss, xs == x]
+-- >>> test "listen" ["listen", "apple"]
+-- ["listen"]
+
+-- >>> anagramsFor "Orchestra" ["cashregister", "Carthorse", "radishes"]
+-- ["Carthorse"]
 
 main :: IO()
 main = undefined

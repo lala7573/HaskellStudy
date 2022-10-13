@@ -29,7 +29,14 @@ link: https://github.com/jwvg0425/HaskellStudy
 - [x] 포커 게임 만들기 (Deck → Deck → Result, 족보 기준 - https://namu.wiki/w/포커#s-3.1) => [코드](https://gist.github.com/lala7573/55398f651b52eb9f7353fc57e0efc0fc)
 
 - [ ] [exercism haskell](https://exercism.org/tracks/haskell/exercises) 100 문제 풀기 => [진도](https://exercism.org/profiles/lala7573)
-
+  - settings
+  ```
+  brew install exercism
+  exercism download --exercise=clock --track=haskell
+  cd ~/Exercism/haskell/clock
+  stack config set resolver lts-18.28
+  stack setup --install-ghc
+  ```
 ## TODO
 
 - [ ] [하스켈 위키 북스 교재 2장](https://wikidocs.net/book/204)

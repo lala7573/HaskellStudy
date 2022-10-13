@@ -25,7 +25,22 @@ source-repository head
 
 library
   exposed-modules:
+      Acronym
+      BaseBallGame
+      Clock
+      CryptoSquare
+      Grains
       Lib
+      Luhn
+      NucleotideCounts
+      Poker
+      Prime
+      Strain
+      Study01_03
+      Study04
+      Study05
+      Study06
+      SumOfMultiples
   other-modules:
       Paths_HaskellStudy
   hs-source-dirs:

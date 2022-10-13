@@ -5,6 +5,8 @@ import Data.Map (Map, fromList)
 
 
 -- https://exercism.org/tracks/haskell/exercises/rna-transcription
+-- [Ether] => Either []
+dnaToRna :: Char -> Either Char Char
 dnaToRna dna 
   | dna == 'G' = Right 'C'
   | dna == 'C' = Right 'G'
