@@ -3,10 +3,6 @@ module CryptoSquare (encode) where
 import Data.List
 import Data.Char (toLower, isSpace)
 
-trim :: String -> String
-trim = f . f
-   where f = reverse . dropWhile isSpace
-
 padding :: Int -> String -> [Char]
 padding n value = value ++ replicate lenPadding ' '
   where
@@ -24,20 +20,9 @@ encode xs
   where
     xs' = (lower . getAlpha) xs
     len = length xs'
-    r = head [x | x <- [1..], x * (x + 1) >= len]
-    c = head [x | x <- [r..], r * x >= len]
+    r = ceiling $ sqrt $ fromIntegral len
+    c = len `div` r
     chunked = map (padding c) (chunk c xs')
-
--- >>> encode ""
--- >>> encode "B"
--- >>> encode "Chill out."
--- ""
--- "b"
--- "clu hlt io "
-
-
--- >>> encode "If man was meant to stay on the ground, god would have given us roots."
--- ["ifmanwas","meanttos","tayonthe","groundgo","dwouldha","vegivenu","sroots  "]
 
 chunk :: Int -> [a] -> [[a]]
 chunk _ [] = []

@@ -32,15 +32,20 @@ library
       Grains
       Lib
       Luhn
+      Minesweeper
       NucleotideCounts
+      PerfectNumbers
+      Phone
       Poker
       Prime
+      SecretHandshake
       Strain
       Study01_03
       Study04
       Study05
       Study06
       SumOfMultiples
+      Triangle
   other-modules:
       Paths_HaskellStudy
   hs-source-dirs:
