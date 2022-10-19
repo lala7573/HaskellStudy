@@ -25,10 +25,10 @@ removeQuote xs
 
 
 wordCount :: [Char] -> [(String, Int)]
-wordCount xs = (map (\x-> (head x, length x)) . group . sort . map removeQuote) $ wordsWhen (\x -> x `notElem` ('\'':['A' .. 'Z'] ++ ['a' .. 'z'] ++ ['0' .. '9'])) $ map toLower xs
+wordCount xs = (map ((,) <$> head <*> length) . group . sort . map removeQuote) $ wordsWhen (\x -> x `notElem` ('\'':['A' .. 'Z'] ++ ['a' .. 'z'] ++ ['0' .. '9'])) $ map toLower xs
 
 -- >>> wordCount "\"That's the password: 'PASSWORD 123'!\", cried the Special Agent.\nSo I fled."
--- [("'password",1),("123'",1),("agent",1),("cried",1),("fled",1),("i",1),("password",1),("so",1),("special",1),("that's",1),("the",2)]
+-- [("123",1),("agent",1),("cried",1),("fled",1),("i",1),("password",2),("so",1),("special",1),("that's",1),("the",2)]
 
 -- >>> wordCount "First: don't laugh. Then: don't cry."
 -- [("cry",1),("don't",2),("first",1),("laugh",1),("then",1)]
