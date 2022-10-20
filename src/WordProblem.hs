@@ -1,5 +1,7 @@
 module WordProblem (answer) where
 
+-- https://exercism.org/tracks/haskell/exercises/wordy
+
 import Data.List
 
 data Expression = Value { int :: Integer } | Plus | Minus | Multiply | Divide deriving (Show, Eq)
