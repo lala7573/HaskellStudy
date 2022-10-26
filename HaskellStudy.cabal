@@ -27,17 +27,23 @@ library
   exposed-modules:
       Acronym
       BaseBallGame
+      BST
+      Change
       Clock
       CryptoSquare
       Grains
+      Hamming
       Lib
       Luhn
       Minesweeper
       NucleotideCounts
+      OCR
       PerfectNumbers
       Phone
       Poker
       Prime
+      Queens
+      Robot
       SecretHandshake
       Strain
       Study01_03
@@ -46,6 +52,9 @@ library
       Study06
       SumOfMultiples
       Triangle
+      TwelveDays
+      WordCount
+      WordProblem
   other-modules:
       Paths_HaskellStudy
   hs-source-dirs:
