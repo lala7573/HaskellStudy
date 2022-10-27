@@ -1,4 +1,6 @@
--- module Main (main, listToPairs, trueman, yesNo) where
+module Study04 (main) where
+
+main = undefined
 
 -- f :: (Integral a) => a -> String
 -- f n = "must run this function!"

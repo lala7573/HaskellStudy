@@ -1,5 +1,6 @@
--- module Main (main) where
+module Study05 (main) where
 
+main = undefined
 -- x a b c = a + b + c
 
 -- -- >>> 3 `x` 4 5

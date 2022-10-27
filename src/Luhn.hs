@@ -16,4 +16,4 @@ isValid n =  (evens + odds) `mod` 10 == 0 && len > 1
 -- >>> isValid "0"
 -- >>> isValid "4539 3195 0343 6467"
 -- (43,37)
--- (0,0)
+

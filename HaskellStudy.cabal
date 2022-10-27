@@ -35,6 +35,7 @@ library
       Hamming
       Lib
       Luhn
+      MapMap
       Minesweeper
       NucleotideCounts
       OCR
@@ -63,6 +64,8 @@ library
   build-depends:
       base >=4.7 && <5
     , containers >=0.5.9
+    , random
+    , split
     , text
   default-language: Haskell2010
 
@@ -77,6 +80,8 @@ executable HaskellStudy-exe
       HaskellStudy
     , base >=4.7 && <5
     , containers >=0.5.9
+    , random
+    , split
     , text
   default-language: Haskell2010
 
@@ -92,5 +97,7 @@ test-suite HaskellStudy-test
       HaskellStudy
     , base >=4.7 && <5
     , containers >=0.5.9
+    , random
+    , split
     , text
   default-language: Haskell2010

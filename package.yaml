@@ -24,7 +24,7 @@ dependencies:
   - containers >= 0.5.9
   - text
   - split
-  # - random
+  - random
 
 ghc-options:
   - -Wall
