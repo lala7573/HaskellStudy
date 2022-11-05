@@ -33,6 +33,7 @@ library
       CryptoSquare
       Grains
       Hamming
+      IsbnVerifier
       Lib
       Luhn
       MapMap
@@ -43,8 +44,13 @@ library
       Phone
       Poker
       Prime
+      ProteinTranslation
+      Proverb
       Queens
+      ResistorColors
+      ResistorColorsTrio
       Robot
+      RunLength
       SecretHandshake
       Strain
       Study01_03
