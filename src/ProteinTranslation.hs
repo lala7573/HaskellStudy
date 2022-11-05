@@ -1,4 +1,5 @@
 module ProteinTranslation(proteins) where
+-- https://exercism.org/tracks/haskell/exercises/protein-translation
 
 import Data.List.Split (chunksOf)
 
