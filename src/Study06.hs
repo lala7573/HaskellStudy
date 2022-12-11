@@ -1,5 +1,6 @@
--- module Main (main) where
+module Study06 (main) where
 
+main = undefined
 -- # Algebraic Data type
 -- data Shape = Circle Float Float Float | Rectangle Float Float Float Float deriving Show
 -- -- Circle :: Float -> Float -> Float -> Shape

@@ -1,48 +1,66 @@
 module Main (main) where
 
-main :: IO()
-main = undefined
+import Text.Read
 
--- map :: (a -> b) -> [a] -> [b]
--- map =  f x: map f xs
-
-mmapf f = mmapf
-  where 
-    mapf (x:xs) = f x: map f xs
-    mmapf (y:ys) = mapf y: map mapf ys
-
--- map f (x:xs) = f x: map f xs
-mapmap f ((x:xs):xss) = (map . map) f ((x:xs):xss)
--- (map . map) 
--- 함수의 결합: (map . map) 의 첫번째 파라미터는 (a->b) 임
--- = (a->b) -> map ([a] -> [b])
--- = (a->b) -> [[a]] -> [[b]]
-
--- map f (x:xs) = f x: map f xs
--- (map . map)
--- = map . (\(f (x:xs)) -> f x: map f xs)
--- = f x: map f xs
+-- Applicative <$>, <*>
+interactiveDoubling = do
+  putStrLn "Choose a number:"
+  s <- getLine
+  let mx = readMaybe s :: Maybe Double -- type annotation
+  case (2*) <$> mx of
+    Just x -> putStrLn ("The double of your number is " ++ show x)
+    Nothing -> do
+            putStrLn "This is not a valid number. Retrying..."
+            interactiveDoubling
 
 
--- No instance for (Show ([a0] -> (a0 -> b0) -> [b0]))
---   arising from a use of ‘evalPrint’
---   (maybe you haven't applied a function to enough arguments?)
+interactiveSumming = do
+  putStrLn "Choose two numbers:"
+  mx <- readMaybe <$> getLine
+  my <- readMaybe <$> getLine
+  case (+) <$> mx <*> my :: Maybe Double of
+    Just z -> putStrLn ("The sum of your numbers is " ++ show z)
+    Nothing -> do
+        putStrLn "Invalid number. Retrying..."
+        interactiveSumming
+-- (<*>) :: Maybe (a -> b) -> Maybe a -> Maybe b
+-- >>> (,) <$> (Just 3) <*> (Just 4)
+-- >>> (+) <$> (Just 3) <*> (Just 4)
+-- Just (3,4)
+-- Just 7
 
--- >>> (map . map [1, 2, 3] (+))  [4, 5, 6]
--- Couldn't match expected type ‘[a3] -> a -> b’
---             with actual type ‘[b0]’
--- Couldn't match expected type ‘a0 -> b0’ with actual type ‘[a1]’
--- Couldn't match expected type ‘[a0]’
---             with actual type ‘a2 -> a2 -> a2’
-  
--- = map 
-
--- mapmap = (map $ map)
--- = map map
--- = map ((a->b) -> [a]->[b])
--- = [(a->b)] -> [[a] -> [b]]
+-- instance Applicative Maybe where
+--   pure = Just 
+--   (Just f) <*> (Just x) = Just (f x)
+--   _        <*> _        = Nohting
 
 
 
+addExclamation :: String -> String
+addExclamation s = s ++ "!"
+
+main = putStrLn . addExclamation <$> getLine
 
 
+interactiveConcatenating :: IO()
+-- interactiveConcatenating = do
+--   putStrLn "Choose two strings:"
+--   sx <- getLine
+--   sy <- getLine
+--   putStrLn "Let's concatenate them:"
+--   putStrLn (sx ++ sy)
+
+-- interactiveConcatenating = do
+--   putStrLn "Choose two strings:"
+--   sz <- (++) <$> getLine <*> getLine
+--   putStrLn "Let's concatenate them:"
+--   putStrLn sz
+
+-- (<*>)는 액션들의 순서를 존중하므로 그 액션들을 나열하는 수단도 제공한다. 
+-- u *> v = (\_ y -> y) <$> u <*> v
+-- (\_ y -> y) <$> putStrLn "First!" <*> putStrLn "Second!"
+-- putStrLn "First!" *> putStrLn "Second!"
+
+interactiveConcatenating = do
+  sz <- putStrLn "Choose two strings:" *> ((++) <$> getLine <*> getLine)
+  putStrLn "Let's concatenate them:" *> putStrLn sz
